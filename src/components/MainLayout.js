@@ -12,6 +12,7 @@ import {
   AiOutlineBgColors,
 } from "react-icons/ai";
 import { SiBrandfolder } from "react-icons/si";
+import { IoMdNotifications } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, Button, theme } from "antd";
@@ -116,6 +117,7 @@ const MainLayout = () => {
       </Sider>
       <Layout>
         <Header
+          className="d-flex justify-content-between ps-1 pe-5 "
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -131,6 +133,28 @@ const MainLayout = () => {
               height: 64,
             }}
           />
+          <div className="d-flex gap-3 align-items-center">
+            <div className="position-relative">
+              <IoMdNotifications className="fs-4" />
+              <span className="badge bg-warning rounded-circle p-1 position-absolute">
+                3
+              </span>
+            </div>
+            <div className="d-flex gap-3 align-items-center">
+              <div>
+                <img
+                  width={32}
+                  height={32}
+                  src="https://p7.hiclipart.com/preview/247/564/869/computer-icons-user-profile-clip-art-user-avatar.jpg"
+                  alt=""
+                />
+              </div>
+              <div>
+                <h5 className="mb-0">Navdeep</h5>
+                <p className="mb-0">timmyturner@gmail.com</p>
+              </div>
+            </div>
+          </div>
         </Header>
         <Content
           style={{
@@ -140,7 +164,7 @@ const MainLayout = () => {
             background: colorBgContainer,
           }}
         >
-         <Outlet />
+          <Outlet />
         </Content>
       </Layout>
     </Layout>
