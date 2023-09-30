@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UploadOutlined,
-  VideoCameraOutlined,
-} from "@ant-design/icons";
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineShoppingCart,
@@ -16,7 +11,7 @@ import { IoMdNotifications } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, Button, theme } from "antd";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate, Outlet, Link } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
@@ -140,7 +135,7 @@ const MainLayout = () => {
                 3
               </span>
             </div>
-            <div className="d-flex gap-3 align-items-center">
+            <div className="d-flex gap-3 align-items-center dropdown">
               <div>
                 <img
                   width={32}
@@ -149,9 +144,34 @@ const MainLayout = () => {
                   alt=""
                 />
               </div>
-              <div>
+              <div
+                role="button"
+                id="dropdownMenuLink"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
                 <h5 className="mb-0">Navdeep</h5>
                 <p className="mb-0">timmyturner@gmail.com</p>
+              </div>
+              <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ "height": "auto", "lineHeight": "20px" }}
+                    to="/"
+                  >
+                    View Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    className="dropdown-item py-1 mb-1"
+                    style={{ "height": "auto", "lineHeight": "20px" }}
+                    to="/"
+                  >
+                    Sign Out
+                  </Link>
+                </li>
               </div>
             </div>
           </div>

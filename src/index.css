@@ -16,7 +16,7 @@ body {
 .logo {
   height: 32px;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
+  background: whitesmoke;
 }
 .ant-layout {
   min-height: 100vh;
@@ -41,9 +41,17 @@ body {
 main {
   overflow-y: scroll;
   background-color: transparent !important;
+  height: 85vh;
+}
+main::-webkit-scrollbar {
+  width: 0px;
 }
 .sm-logo {
   display: none;
+  color: #343a40;
+}
+.lg-logo {
+  color: #343a40;
 }
 .ant-layout-sider-collapsed .sm-logo {
   display: block;
@@ -70,5 +78,4 @@ main {
 .ant-layout-header div .badge {
   top: 16px;
   right: -6px;
-
 }
