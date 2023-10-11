@@ -6,16 +6,16 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../features/auth/authSlice";
 
+let schema = Yup.object().shape({
+  email: Yup.string()
+    .email("Email should be valid")
+    .required("Email is required"),
+  password: Yup.string().required("Password is required"),
+});
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  let schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Email should be valid")
-      .required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -36,9 +36,9 @@ const Login = () => {
     if (!user == null || isSuccess) {
       navigate("admin");
     } else {
-      alert("not ");
+      return
     }
-  }, [user, isLoading, isError, isSuccess, message]);
+  }, [user, isLoading, isError, isSuccess]);
   return (
     <div className="py-5" style={{ background: "#444", minHeight: "100vh" }}>
       <br />
@@ -49,6 +49,9 @@ const Login = () => {
       <div className="my-5 w-25 bg-white rounded-3 mx-auto p-4">
         <h3 className="text-center title">Login</h3>
         <p className="text-center">Login to your account</p>
+        <div className="error">
+          {message.message === "Rejected" ? "You are not an admin" : ""}
+        </div>
         <form action="" onSubmit={formik.handleSubmit}>
           <CustomInput
             type="text"
@@ -56,7 +59,7 @@ const Login = () => {
             label="Email Address"
             id="email"
             val={formik.values.email}
-            onCh={formik.handleChange("email")}
+            onChng={formik.handleChange("email")}
           />
           <div className="error">
             {formik.touched.email && formik.errors.email ? (
@@ -69,7 +72,7 @@ const Login = () => {
             label="Password"
             id="pass"
             val={formik.values.password}
-            onCh={formik.handleChange("password")}
+            onChng={formik.handleChange("password")}
           />
           <div className="error">
             {formik.touched.password && formik.errors.password ? (

@@ -1,32 +1,50 @@
 import React from "react";
 import { Table } from "antd";
+import { FiEdit, FiDelete } from "react-icons/fi";
+import { useDispatch, useSelector } from "react-redux";
+import { getCategories } from "../features/pcategory/pcategorySlice";
+import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
+const columns = [
+  {
+    title: "SNo",
+    dataIndex: "key",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+    sorter: (a, b) => a.name.length - b.name.length,
+  },
+  {
+    title: "Action",
+    dataIndex: "action",
+  },
+];
 const Categorylist = () => {
-  const columns = [
-    {
-      title: "SNo",
-      dataIndex: "key",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      title: "Product",
-      dataIndex: "product",
-    },
-    {
-      title: "Status",
-      dataIndex: "status",
-    },
-  ];
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
+  const pCatState = useSelector((state) => state.pCategory.pCategories);
+  
+  console.log(pCatState);
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i <  pCatState.length; i++) {
     data1.push({
-      key: i,
-      name: `Edward King ${i}`,
-      product: 32,
-      status: `London, Park Lane no. ${i}`,
+      key: i + 1,
+      name: pCatState[i].title,
+      action: (
+        <>
+          <Link to="/" className="mt-3 fs-3 text-danger">
+            <FiEdit />
+          </Link>
+          <Link to="/" className="mt-3 fs-3 text-danger">
+            <FiDelete />
+          </Link>
+        </>
+      ),
     });
   }
   return (
