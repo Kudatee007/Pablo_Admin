@@ -6,6 +6,9 @@ import {
   AiOutlineUserAdd,
   AiOutlineBgColors,
 } from "react-icons/ai";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { SiBrandfolder } from "react-icons/si";
 import { IoMdNotifications } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
@@ -157,7 +160,7 @@ const MainLayout = () => {
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"
-                    style={{ "height": "auto", "lineHeight": "20px" }}
+                    style={{ height: "auto", lineHeight: "20px" }}
                     to="/"
                   >
                     View Profile
@@ -166,7 +169,7 @@ const MainLayout = () => {
                 <li>
                   <Link
                     className="dropdown-item py-1 mb-1"
-                    style={{ "height": "auto", "lineHeight": "20px" }}
+                    style={{ height: "auto", lineHeight: "20px" }}
                     to="/"
                   >
                     Sign Out
@@ -184,6 +187,17 @@ const MainLayout = () => {
             background: colorBgContainer,
           }}
         >
+          <ToastContainer
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            theme="light"
+          />
           <Outlet />
         </Content>
       </Layout>

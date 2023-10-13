@@ -42,10 +42,19 @@ const columns = [
 
 const Productlist = () => {
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+    const fetchData = async () => {
+      try {
+        await dispatch(getProducts());
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        // You can handle the error here, e.g., display an error message or log it
+      }
+    };
+  
+    fetchData();
+  }, [dispatch]);
 
   const productState = useSelector((state) => state.product.products);
   const data1 = [];
