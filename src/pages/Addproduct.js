@@ -12,7 +12,7 @@ import { getColors } from "../features/color/colorSlice";
 import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { delImg, uploadImg } from "../features/upload/uploadSlice";
-import { createProducts } from "../features/product/productSlice";
+import { createProducts, resetState } from "../features/product/productSlice";
 import { useNavigate } from "react-router-dom";
 toast.success("Product Added Successfully");
 
@@ -24,10 +24,10 @@ let schema = yup.object().shape({
   category: yup.string().required("Category is required"),
   tags: yup.string().required("Tag is required"),
   color: yup
-  .array()
-  .min(1, "Pick at least one color")
-  .required("Color is Required"),
-quantity: yup.number().required("Quantity is Required"),
+    .array()
+    .min(1, "Pick at least one color")
+    .required("Color is Required"),
+  quantity: yup.number().required("Quantity is Required"),
 });
 
 const Addproduct = () => {
@@ -98,7 +98,7 @@ const Addproduct = () => {
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
-        navigate("/admin/product-list");
+        dispatch(resetState());
       }, 3000);
     },
   });

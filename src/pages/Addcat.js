@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { createCategory } from "../features/pcategory/pcategorySlice";
+import { createCategory, resetState } from "../features/pcategory/pcategorySlice";
 
 toast.success("Brand Added Successfully");
 
@@ -37,7 +37,7 @@ const Addcat = () => {
       dispatch(createCategory(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/category-list");
+        dispatch(resetState())
       }, 3000);
     },
   });

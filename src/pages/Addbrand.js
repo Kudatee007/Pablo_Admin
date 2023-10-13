@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { createBrand } from "../features/brand/brandSlice";
+import { createBrand, resetState } from "../features/brand/brandSlice";
 toast.success("Brand Added Successfully");
 
 let schema = yup.object().shape({
   title: yup.string().required("Brand name is required"),
 });
 const Addbrand = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const newBrand = useSelector((state) => state.brand);
   const { isSuccess, isError, isLoading, createdBrand } = newBrand;
@@ -36,7 +36,7 @@ const Addbrand = () => {
       dispatch(createBrand(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/brand-list");
+        dispatch(resetState())
       }, 3000);
     },
   });

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { createColor } from "../features/color/colorSlice";
+import { createColor, resetState } from "../features/color/colorSlice";
 toast.success("Color Added Successfully");
 
 let schema = yup.object().shape({
@@ -13,7 +13,7 @@ let schema = yup.object().shape({
 });
 
 const Addcolor = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const newColor = useSelector((state) => state.color);
   const { isSuccess, isError, isLoading, createdColor } = newColor;
@@ -37,7 +37,7 @@ const Addcolor = () => {
       dispatch(createColor(values));
       formik.resetForm();
       setTimeout(() => {
-        navigate("/admin/color-list");
+        dispatch(resetState())
       }, 3000);
     },
   });

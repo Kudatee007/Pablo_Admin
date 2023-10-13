@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { SiBrandfolder } from "react-icons/si";
 import { IoMdNotifications } from "react-icons/io";
-import { BiCategory } from "react-icons/bi";
+import { BiCategory, BiSolidCoupon } from "react-icons/bi";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, Button, theme } from "antd";
 import { useNavigate, Outlet, Link } from "react-router-dom";
@@ -97,6 +97,23 @@ const MainLayout = () => {
                   key: "color-list",
                   icon: <AiOutlineBgColors className="fs-5" />,
                   label: "Color List",
+                },
+              ],
+            },
+            {
+              key: "marketing",
+              icon: <BiSolidCoupon className="fs-4" />,
+              label: "Marketing",
+              children: [
+                {
+                  key: "coupon",
+                  icon: <BiSolidCoupon className="fs-5" />,
+                  label: "Add Coupon",
+                },
+                {
+                  key: "coupon-list",
+                  icon: <BiSolidCoupon className="fs-5" />,
+                  label: "Coupon List",
                 },
               ],
             },
