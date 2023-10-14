@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Table } from "antd";
 import { FiEdit, FiDelete } from "react-icons/fi";
 import { useDispatch, useSelector } from "react-redux";
-import { getCategories } from "../features/pcategory/pcategorySlice";
+import {
+  getCategories,
+  deleteAProductCategory,
+  resetState,
+} from "../features/pcategory/pcategorySlice";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import CustomModal from "../components/CustomModal";
 
 const columns = [
   {
@@ -22,37 +27,70 @@ const columns = [
   },
 ];
 const Categorylist = () => {
+  const [open, setOpen] = useState(false);
+  const [pCatId, setpCatId] = useState("");
+  const showModal = (e) => {
+    setOpen(true);
+    setpCatId(e);
+  };
+
+  const hideModal = () => {
+    setOpen(false);
+  };
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getCategories());
   }, []);
 
-  const pCatState = useSelector((state) => state.pCategory.pCategories);
-  
-  console.log(pCatState);
+  const pCatStat = useSelector((state) => state.pCategory.pCategories);
+
+  console.log(pCatStat);
   const data1 = [];
-  for (let i = 0; i <  pCatState.length; i++) {
+  for (let i = 0; i < pCatStat.length; i++) {
     data1.push({
       key: i + 1,
-      name: pCatState[i].title,
+      name: pCatStat[i].title,
       action: (
         <>
-          <Link to="/" className="mt-3 fs-3 text-danger">
+          <Link
+            to={`/admin/category/${pCatStat[i]._id}`}
+            className=" fs-3 text-danger"
+          >
             <FiEdit />
           </Link>
-          <Link to="/" className="mt-3 fs-3 text-danger">
+          <button
+            className="ms-3 fs-3 text-danger bg-transparent border-0"
+            onClick={() => showModal(pCatStat[i]._id)}
+          >
             <FiDelete />
-          </Link>
+          </button>
         </>
       ),
     });
   }
+
+  const deleteCategory = (e) => {
+    dispatch(deleteAProductCategory(e));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getCategories());
+    }, 100);
+  };
   return (
     <div>
-      <h3 className="mb-4 title">Categories</h3>
+      <h3 className="mb-4 title">Product Categories</h3>
       <div>
         <Table columns={columns} dataSource={data1} />
       </div>
+      <CustomModal
+        hideModal={hideModal}
+        open={open}
+        performAction={() => {
+          deleteCategory(pCatId);
+        }}
+        title="Are you sure you want to delete this Product Category?"
+      />
     </div>
   );
 };
