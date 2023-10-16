@@ -18,6 +18,7 @@ import Addcat from "./pages/Addcat";
 import Addbrand from "./pages/Addbrand";
 import Couponlist from "./pages/Couponlist";
 import Addcoupon from "./pages/Addcoupon";
+import ViewEnq from "./pages/ViewEnq";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="enquiries" element={<Enquires />} />
+          <Route path="enquiries/:od" element={<ViewEnq />} />
           <Route path="orders" element={<Orders />} />
           <Route path="customers" element={<Customers />} />
           <Route path="color" element={<Addcolor />} />
