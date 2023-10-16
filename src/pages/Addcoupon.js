@@ -1,55 +1,94 @@
 import React, { useEffect } from "react";
 import CustomInput from "../components/Custominput";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { createCoupon, resetState } from "../features/coupon/couponSlice";
+import { createCoupon, getACoupon, resetState, updateACoupon } from "../features/coupon/couponSlice";
 
 
 toast.success("Color Added Successfully");
 
 let schema = yup.object().shape({
-  name: yup.string().required("Brand name is required"),
-  expiry: yup.date().required("Expiry date is required"),
-  discount: yup.number().required("Discount percentage name is required"),
+  name: yup.string().required("Coupon Name is Required"),
+  expiry: yup.date().required("Expiry Date is Required"),
+  discount: yup.number().required("Discount Percentage is Required"),
 });
 
 const Addcolor = () => {
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const getCouponId = location.pathname.split("/")[3];
   const newCoupon = useSelector((state) => state.coupon);
-  const { isSuccess, isError, isLoading, createdCoupon } = newCoupon;
+
+  const {
+    isSuccess,
+    isError,
+    isLoading,
+    createdCoupon,
+    couponName,
+    couponDiscount,
+    couponExpiry,
+    updatedCoupon,
+  } = newCoupon;
+  const changeDateFormet = (date) => {
+    const newDate = new Date(date).toLocaleDateString();
+    const [month, day, year] = newDate.split("/");
+    return [year, month, day].join("-");
+  };
+
+  useEffect(() => {
+    if (getCouponId !== undefined) {
+      dispatch(getACoupon(getCouponId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [getCouponId]);
 
   useEffect(() => {
     if (isSuccess && createdCoupon) {
-      toast.success("Coupon Added Successfully!");
+      toast.success("Coupon Added Successfullly!");
     }
-
-    if (isError) {
-      toast.error("Something went Wrong");
+    if (isSuccess && updatedCoupon) {
+      toast.success("Coupon Updated Successfullly!");
+      navigate("/admin/coupon-list");
+    }
+    if (isError && couponName && couponDiscount && couponExpiry) {
+      toast.error("Something Went Wrong!");
     }
   }, [isSuccess, isError, isLoading]);
-
+  
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      name: "",
-      expiry: "",
-      discount: "",
+      name: couponName || "",
+      expiry: changeDateFormet(couponExpiry) || "",
+      discount: couponDiscount || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
-      dispatch(createCoupon(values));
-      formik.resetForm();
-      setTimeout(() => {
+      if (getCouponId !== undefined) {
+        const data = { id: getCouponId, couponData: values };
+        dispatch(updateACoupon(data));
         dispatch(resetState());
-      }, 3000);
+      } else {
+        dispatch(createCoupon(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState);
+        }, 300);
+      }
     },
   });
+
+
   return (
     <div>
-      <h3 className="mb-4 title">Add Coupon</h3>
+      <h3 className="mb-4 title">
+        {getCouponId !== undefined ? "Edit" : "Add"} Coupon
+      </h3>
       <div>
         <form onSubmit={formik.handleSubmit}>
           <CustomInput
@@ -66,11 +105,11 @@ const Addcolor = () => {
           </div>
           <CustomInput
             type="date"
-            label="Enter Expiry Date"
             name="expiry"
             onChng={formik.handleChange("expiry")}
             onBlr={formik.handleBlur("expiry")}
             val={formik.values.expiry}
+            label="Enter Expiry Data"
             id="date"
           />
           <div className="error">
@@ -92,7 +131,7 @@ const Addcolor = () => {
             className="btn btn-success border-0 rounded-3 my-5"
             type="submit"
           >
-            Add Coupon
+            {getCouponId !== undefined ? "Edit" : "Add"} Coupon
           </button>
         </form>
       </div>
