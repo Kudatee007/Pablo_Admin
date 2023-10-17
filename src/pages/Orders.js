@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Table } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { FiEdit, FiDelete } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
+import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { getOrders } from "../features/auth/authSlice";
 
@@ -44,13 +45,11 @@ const Orders = () => {
     data1.push({
       key: i + 1,
       name: orderState[i].orderby.firstname,
-      product: orderState[i].products.map((i, j) => {
-        return (
-          <ul key={j}>
-            <li> {i.product.title} </li>
-          </ul>
-        );
-      }),
+      product: (
+        <Link to={`/admin/order/${orderState[i].orderby._id}`}>
+          View Orders
+        </Link>
+      ),
       amount: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (
@@ -58,8 +57,8 @@ const Orders = () => {
           <Link to="/" className="mt-3 fs-3 text-danger">
             <FiEdit />
           </Link>
-          <Link to="/" className="mt-3 fs-3 text-danger">
-            <FiDelete />
+          <Link className="ms-3 fs-3 text-danger" to="/">
+            <AiFillDelete />
           </Link>
         </>
       ),
