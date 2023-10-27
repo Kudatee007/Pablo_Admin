@@ -105,8 +105,6 @@ const Addproduct = () => {
   const handleColors = (e) => {
     setColor(e);
   };
-  console.log(color);
-  console.log("goog 1here");
   return (
     <div>
       <h3 className="mb-4 title">Add Product</h3>

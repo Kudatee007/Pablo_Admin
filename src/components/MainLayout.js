@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { SiBrandfolder } from "react-icons/si";
 import { IoMdNotifications } from "react-icons/io";
-import { BiCategory, BiSolidCoupon } from "react-icons/bi";
+import { BiCategory, BiSolidCoupon, BiSolidLogOut } from "react-icons/bi";
 import { FaClipboardList } from "react-icons/fa";
 import { Layout, Menu, Button, theme } from "antd";
 import { useNavigate, Outlet, Link } from "react-router-dom";
@@ -23,6 +23,13 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+
+  // Function to handle logout
+  const handleLogout = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   return (
     <Layout>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -38,6 +45,8 @@ const MainLayout = () => {
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
             if (key === "signout") {
+              localStorage.clear();
+              window.location.reload();
             } else {
               navigate(key);
             }
@@ -127,6 +136,11 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-5" />,
               label: "Enquiries",
             },
+            {
+              key: "signout",
+              icon: <BiSolidLogOut className="fs-5" />,
+              label: "Sign Out",
+            },
           ]}
         />
       </Sider>
@@ -178,7 +192,7 @@ const MainLayout = () => {
                   <Link
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
-                    to="/"
+                    to="/p"
                   >
                     View Profile
                   </Link>
@@ -188,6 +202,7 @@ const MainLayout = () => {
                     className="dropdown-item py-1 mb-1"
                     style={{ height: "auto", lineHeight: "20px" }}
                     to="/"
+                    onClick={handleLogout}
                   >
                     Sign Out
                   </Link>

@@ -14,7 +14,7 @@ import {
 toast.success("Color Added Successfully");
 
 let schema = yup.object().shape({
-  title: yup.string().required("Brand name is required"),
+  title: yup.string().required("Color type is required"),
 });
 
 const Addcolor = () => {
