@@ -54,17 +54,17 @@ const getOrder = async (id) => {
   return response.data;
 };
 
-const getMonthlyOrders = async (id) => {
+const getMonthlyOrders = async (data) => {
   const response = await axios.get(
     `${base_url}user/getMonthWiseOrderIncome`,
-    config
+    data
   );
 
   return response.data;
 };
 
-const getYearlyStats = async (id) => {
-  const response = await axios.get(`${base_url}user/getyearlyorders`, config);
+const getYearlyStats = async (data) => {
+  const response = await axios.get(`${base_url}user/getyearlyorders`, data);
 
   return response.data;
 };
